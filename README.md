@@ -17,7 +17,7 @@ Example EVA configuration:
 name: "EVA"
 version: "1.0.0"
 
-def
+@dev
 name: "Lucas Silveira"
 messages: [
     format("Hello, I am {}!", ref(name)),
