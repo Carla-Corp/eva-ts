@@ -12,13 +12,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup MinGW
-        uses: egor-tensin/setup-mingw@v2
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
         with:
-          platform: x64
+          msystem: MINGW64
+          update: true
+          install: >-
+            mingw-w64-x86_64-gcc
 
       - name: Compile wrapper.dll
-        shell: bash
+        shell: msys2 {0}
         run: |
           mkdir -p build
 
@@ -29,7 +32,7 @@ jobs:
             src/wrapper.c \
             -lkernel32
 
-      - name: Upload wrapper.dll artifact
+      - name: Upload wrapper.dll
         uses: actions/upload-artifact@v4
         with:
           name: wrapper-windows-x64
