@@ -58,5 +58,5 @@ if( platform() != 'win32' ) wrapper_utils = cc({
     symbols: wrapper_symbols
 });
 
-else wrapper_utils = opendl(win_wrapper_path, wrapper_symbols)
+else wrapper_utils = dlopen(win_wrapper_path, wrapper_symbols)
 export { library_path, library, wrapper_utils };
