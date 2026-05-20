@@ -1,0 +1,36 @@
+name: Build Windows Wrapper DLL
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-wrapper:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup MinGW
+        uses: egor-tensin/setup-mingw@v2
+        with:
+          platform: x64
+
+      - name: Compile wrapper.dll
+        shell: bash
+        run: |
+          mkdir -p build
+
+          gcc \
+            -shared \
+            -O2 \
+            -o build/wrapper.dll \
+            src/wrapper.c \
+            -lkernel32
+
+      - name: Upload wrapper.dll artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wrapper-windows-x64
+          path: build/wrapper.dll
